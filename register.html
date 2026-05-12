@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=div, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet"type="text/css" href="css/index.css">
 </head>
@@ -17,30 +17,30 @@
         <form enctype="multipart/form-data">
             <div class="form-group">
                 <label >Enter First Name</label>
-                <input type="" placeholder="Enter First name" required>
+                <input type="" placeholder="Enter First name"id="txtfName" required>
             </div>
                 <div class="form-group">
                 <label >Enter Last Name</label>
-                <input type="" placeholder="enter last name" required>
+                <input type="" placeholder="Enter Last Name" id="txtlName" required>
             </div>
                 <div class="form-group">
                 <label >Enter Email</label>
-                <input type="" placeholder="enter email" required>
+                <input type="" placeholder="Enter Email" id="txtemail"   required>
             </div>
             <div class="form-group">
                 
                 <label >Enter password</label>
-                <input type="password" name="" placeholder="******" required>
+                <input type="password" name="" placeholder="******" id="txtpass" required>
             
             </div>
              <div class="form-group">
                 
                 <label >Confirm password</label>
-                <input type="password" name="" placeholder="******" required>
+                <input type="password" name="" placeholder="******" id="txtconpass" required>
             
             </div>
-            <button class="btn-primary">Create account</button>
-            <button class="btn-register"><a href="index.html">I have an account login</a></button>
+            <button class="btn-primary" id="btncreate" type="button">Create account</button>
+            <button class="btn-register" type="button"><a href="index.html">I have an account login</a></button>
             
             
         </form>
@@ -53,8 +53,9 @@
 
 </div>  
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
 <script src="js/config.js"></script>
+<script src="js/register.js"></script>
 </body>
 </html>
