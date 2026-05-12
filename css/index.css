@@ -1,0 +1,107 @@
+*{
+   margin: 0 ;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+    
+    background-color: rgb(32, 67, 179);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.main {
+    width : 100%;
+    max-width: 1000px;
+    display: flex;
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.09);  
+
+}
+
+.logo {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.card {
+    width: 60%;
+    padding: 40px;
+    background: white;
+    color: black;
+}
+
+.card h2 {
+    color: rgb(32, 67, 179);
+    
+}
+.form-group {
+    margin-bottom: 18px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc ;
+    margin-top: 8px;
+    font-size: 16px;
+}
+input :focus{
+    outline: none;
+    border-color: rgb(32, 67, 179);
+}
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: rgb(32, 67, 179);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    align-items: center;  
+    margin-top: 8px;
+}  
+
+
+.btn-register {
+    background-color: white;
+    padding : 12px;
+    width: 100%;
+    height: 40px;
+    border-radius: 12px;
+     border-style: hidden;
+     color: blue  ;
+     margin-top: 8px    ;
+     border: 0px;
+     outline: none  ;
+     cursor: pointer;
+     font-size: 22px;
+     
+    
+}
+.btn-forgot{
+     background-color: white;
+    padding : 12px;
+    width: 100%;
+    height: 40px;
+    border-radius: 12px;
+     border-style: hidden;
+     color: blue  ;
+     margin-top: 8px    ;
+     border: 0px;
+     outline: none  ;
+     cursor: pointer;
+     font-size: 22px;
+}
