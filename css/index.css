@@ -105,3 +105,17 @@ input :focus{
      cursor: pointer;
      font-size: 22px;
 }
+@media screen {
+    .main {
+        flex-direction: column;
+    }
+    .logo {
+        width: 100%;
+        padding: 30px;
+    }
+    .card {
+        width: 100%;
+        padding: 25px;
+    }  
+    
+}
