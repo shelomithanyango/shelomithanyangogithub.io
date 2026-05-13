@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">
+    <img src="assets/kibabii.jpeg" alt="logo" width="20%">
+  </div>
+  <div class="user">
+    <label id="lblusername"></label>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<header class="header">
+  <button class="menu-toggle">☰</button>
+  <nav class="nav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="#">Courses</a>
+    <a href="students.html">Students</a>
+     <a href="admins.html">Admins</a>
+    <a href="gps.html">GPS</a>
+    <a href="reports.html">Reports</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main class="container">
+
+  <!-- Cards -->
+  <div class="cards-grid">
+    <div class="card"><h3>Courses</h3><p class="stat-number">350</p></div>
+    <div class="card"><h3>Active</h3><p class="stat-number">25</p></div>
+    <div class="card"><h3>Past</h3><p class="stat-number">18</p></div>
+    <div class="card"><h3>In Session</h3><p class="stat-number">7</p></div>
+  </div>
+
+  <!-- Table -->
+  <div class="card">
+    <h2>Active courses</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Program</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2026001</td><td>Mka Wanyenje</td><td>IT</td><td>Active</td></tr>
+          
+          <tr><td>2026002</td><td>Oscar Omusungu</td><td>CS</td><td>Active</td></tr>
+          <tr><td>2026003</td><td>Masta Okwako</td><td>SE</td><td>Suspended</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="card">
+    <h2>Add Course</h2>
+    
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter full name">
+      </div>
+      <div class="form-group">
+        <label>Program</label>
+        <input type="text" placeholder="Enter program">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select><option>Active</option><option>Suspended</option></select>
+      </div>
+      <button type="submit" class="btn-primary">Add Courses</button>
+  
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 eClass Attendance</p>
+</footer>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+<script src="js/config.js"></script>
+
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    menuToggle.textContent = nav.classList.contains('active') ? "✖" : "☰";
+  });
+  let lblusername = document.getElementById('lblusername');
+auth.onAuthStateChanged((user)){
+  if(user){
+    lblusername.innerHTML = user.email;
+  }else{
+    window.location.href = "index.html";
+  }
+}
+</script>
+
+</body>
+</html>

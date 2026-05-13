@@ -13,18 +13,23 @@
   <div class="logo">
     <img src="assets/kibabii.jpeg" alt="logo" width="20%">
   </div>
-  <div class="user">Admin: Michael</div>
+  <div class="user">
+    <label id="lblusername"></label>
+  </div>
 </div>
 
 <!-- NAVIGATION -->
 <header class="header">
   <button class="menu-toggle">☰</button>
+  
   <nav class="nav">
     <a href="#">Dashboard</a>
-    <a href="#">Courses</a>
-    <a href="#">Students</a>
-    <a href="#">Reports</a>
-    <a href="#">Logout</a>
+    <a href="courses.html">Courses</a>
+    <a href="students.html">Students</a>
+     <a href="admins.html">Admins</a>
+    <a href="gps.html">GPS</a>
+    <a href="reports.html">Reports</a>
+    <a href="#" onclick="logout()">Logout</a>
   </nav>
 </header>
 
@@ -48,9 +53,9 @@
           <tr><th>ID</th><th>Name</th><th>Program</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr><td>2026001</td><td>Michael Karani</td><td>IT</td><td>Active</td></tr>
-          <tr><td>2026002</td><td>Faith Cecilia</td><td>CS</td><td>Active</td></tr>
-          <tr><td>2026003</td><td>Nemrod Korir</td><td>SE</td><td>Suspended</td></tr>
+          <tr><td>2026001</td><td>Mka Wanyenje</td><td>IT</td><td>Active</td></tr>
+          <tr><td>2026002</td><td>Oscar Omusungu</td><td>CS</td><td>Active</td></tr>
+          <tr><td>2026003</td><td>Masta Okwako</td><td>SE</td><td>Suspended</td></tr>
         </tbody>
       </table>
     </div>
@@ -59,7 +64,7 @@
   <!-- Form -->
   <div class="card">
     <h2>Add Student</h2>
-    <form>
+    
       <div class="form-group">
         <label>Full Name</label>
         <input type="text" placeholder="Enter full name">
@@ -73,7 +78,7 @@
         <select><option>Active</option><option>Suspended</option></select>
       </div>
       <button type="submit" class="btn-primary">Add Student</button>
-    </form>
+  
   </div>
 
 </main>
@@ -82,14 +87,27 @@
 <footer class="footer">
   <p>© 2026 eClass Attendance</p>
 </footer>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+<script src="js/config.js"></script>
 
 <script>
-  const menuToggle = document.querySelector('.menu-toggle');
+   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
   menuToggle.addEventListener('click', () => {
     nav.classList.toggle('active');
     menuToggle.textContent = nav.classList.contains('active') ? "✖" : "☰";
   });
+
+let lbusername = document.getElementById('lbusername')
+auth.onAuthStateChanged( function (user) {
+  if (user) {
+    lbusername.innerHTML= user.email
+  }else{
+    window.location.href ="index.html"
+  }
+})
 </script>
 
 </body>

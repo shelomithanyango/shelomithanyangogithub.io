@@ -26,7 +26,7 @@ btncreate.addEventListener('click', (e) => {
             return;
         }
 
-        let emailid = txtemail.replace(/[@.]/g, (match) => match === '@' ? 'at' : 'dot');
+        let emailid = txtemail.replace(/[@.]/g, (match) => match === '@' ? '_at_' : '_dot_');
         let status = "active";
         let timenow = new Date().toLocaleString();
         let role = "admin";
@@ -42,7 +42,7 @@ btncreate.addEventListener('click', (e) => {
                 status: status,
                 role: role,
                 CreatedBy: txtemail,
-                CreatedOn: timenow
+                CreatedOn: timenow,
             })
             .then(() => {
                 //hideLoading();
@@ -55,10 +55,9 @@ btncreate.addEventListener('click', (e) => {
             });
         })
         .catch((error) => {
-            //hideLoading();
-            console.log(error);
-            alert('Error occurred during registration.');
-        });
+    console.error(error); // Look at your browser console for details
+    alert("Error: " + error.message); // This will tell you if it's 'Email already in use' or 'Weak password'
+});
     }
 
 })
