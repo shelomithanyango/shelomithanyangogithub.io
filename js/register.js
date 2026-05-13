@@ -1,45 +1,64 @@
-const btncreate = document.getElementById('btncreate');
+let btncreate = document.getElementById('btncreate');
 
-btncreate.addEventListener('click', (event) => {
-    event.preventDefault();
+btncreate.addEventListener('click', (e) => {
+    //alert(txtfname)
+    //alert('Button clicked Ready');
+    e.preventDefault();
 
-    const txtfName = document.getElementById('txtfName').value.trim();
-    const txtlName = document.getElementById('txtlName').value.trim();
-    const txtemail = document.getElementById('txtemail').value.trim();
-    const txtpass = document.getElementById('txtpass').value;
-    const txtconpass = document.getElementById('txtconpass').value;
+    let txtfName = document.getElementById('txtfName').value;
+    let txtlName = document.getElementById('txtlName').value;
+    let txtemail = document.getElementById('txtemail').value;
+    let txtpass = document.getElementById('txtpass').value;
+    let conpass = document.getElementById('txtconpass').value;
 
-    if (!txtfName || !txtemail) {
-        alert('Name and email must be filled');
+    if(txtfName == "" || txtemail == ""){
+        alert('Name and email are required.' );
         return;
     }
+    else{
+        if(txtpass == "" || conpass == ""){
+            alert( 'Password and confirmation are required.');
+            return;
+        }
 
-    if (txtpass !== txtconpass) {
-        alert('Password does not match');
-        return;
-    }
+        if(txtpass != conpass){
+            alert( 'Password does not match.');
+            return;
+        }
 
-    const emailid = txtemail.replace(/\./g, '__dot__').replace(/@/g, '__at__');
-    const status = 'active';
+        let emailid = txtemail.replace(/[@.]/g, (match) => match === '@' ? 'at' : 'dot');
+        let status = "active";
+        let timenow = new Date().toLocaleString();
+        let role = "admin";
+        console.log(emailid)
 
-    firebase.auth().createUserWithEmailAndPassword(txtemail, txtpass)
-        .then((userCredentials) => {
-            return firebase.database().ref('userDetails/' + emailid).set({
+        // showLoading('Creating your account...');
+        firebase.auth().createUserWithEmailAndPassword(txtemail, txtpass)
+        .then((userCredential) => {
+            firebase.database().ref('userDetails/' + emailid).set({
                 FirstName: txtfName,
                 LastName: txtlName,
                 Email: txtemail,
-                Status: status,
+                status: status,
+                role: role,
                 CreatedBy: txtemail,
-                CreatedOn: new Date().toISOString(),
+                CreatedOn: timenow
+            })
+            .then(() => {
+                //hideLoading();
+                alert( 'Account created successfully.');
+            })
+            .catch((error) => {
+                //hideLoading();
+                console.log(error);
+                alert('Error occurred during registration.');
             });
         })
-        .then(() => {
-            alert('Account created successfully');
-        })
         .catch((error) => {
-            console.error(error);
-            alert(error.message);
+            //hideLoading();
+            console.log(error);
+            alert('Error occurred during registration.');
         });
-});
+    }
 
-   
+})

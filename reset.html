@@ -16,21 +16,16 @@
         <h2>Reset Password</h2>
         <p>A reset link will be sent to your email  </p>
 
-        <form enctype="multipart/form-data">
+     
             <div class="form-group">
                 <label >Enter Email</label>
-                <input type="" placeholder="example@gmail.com" required>
+                <input type="" placeholder="example@gmail.com" required id="txtemail">
             </div>
-            <div class="form-group">
-                
-                <label >Enter password</label>
-                <input type="" name="" placeholder="******" required>
             
-            </div>
-            <button class="btn-primary">Send reset link</button>
+            <button class="btn-primary" id="btnreset">Send reset link</button >
             <button class="btn-register"><a href="index.html" >Back to login</a></button>
             
-        </form>
+    
    <p>
         
         <a href="index.html"></a>
@@ -42,5 +37,10 @@
 
 
 </div>  
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+<script src="js/config.js"></script>
+<script src="js/reset.js"></script>
 </body>
 </html>
