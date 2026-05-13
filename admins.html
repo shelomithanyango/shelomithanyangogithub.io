@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+  <title>Admin Management</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="css/form.css">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
     <img src="assets/kibabii.jpeg" alt="logo" width="20%">
   </div>
   <div class="user">
-    <label id="lblusername"></label>
+    <label id="lbusername">username</label>
   </div>
 </div>
 
@@ -25,7 +26,7 @@
     <a href="dashboard.html">Dashboard</a>
     <a href="courses.html">Courses</a>
     <a href="students.html">Students</a>
-     <a href="#">Admins</a>
+    <a href="admins.html">Admins</a>
     <a href="gps.html">GPS</a>
     <a href="reports.html">Reports</a>
     <a href="#" onclick="logout()">Logout</a>
@@ -37,60 +38,82 @@
 
   <!-- Cards -->
   <div class="cards-grid">
-    <div class="card"><h3>Courses</h3><p class="stat-number">350</p></div>
-    <div class="card"><h3>Active</h3><p class="stat-number">25</p></div>
-    <div class="card"><h3>Past</h3><p class="stat-number">18</p></div>
-    <div class="card"><h3>In Session</h3><p class="stat-number">7</p></div>
-  </div>
-
-  <!-- Table -->
-  <div class="card">
-    <h2>Active courses</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Name</th><th>Program</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>2026001</td><td>Mka Wanyenje</td><td>IT</td><td>Active</td></tr>
-          
-          <tr><td>2026002</td><td>Oscar Omusungu</td><td>CS</td><td>Active</td></tr>
-          <tr><td>2026003</td><td>Masta Okwako</td><td>SE</td><td>Suspended</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="card"><h3>Super Admins</h3><p class="stat-number">3</p></div>
+    <div class="card"><h3>Standard Admins</h3><p class="stat-number">12</p></div>
   </div>
 
   <!-- Form -->
   <div class="card">
-    <h2>Add Course</h2>
-    
+    <h2>Register New Admin</h2>
       <div class="form-group">
         <label>Full Name</label>
-        <input type="text" placeholder="Enter full name">
+        <input type="text" placeholder="Enter admin name" id="txtadminname">
       </div>
       <div class="form-group">
-        <label>Program</label>
-        <input type="text" placeholder="Enter program">
+        <label>Staff ID / Code</label>
+        <input type="text" placeholder="Enter staff ID" id="txtstaffid">
       </div>
       <div class="form-group">
-        <label>Status</label>
-        <select><option>Active</option><option>Suspended</option></select>
+        <label>Access Level</label>
+        <select id="selectrole">
+          <option>Super Admin</option>
+          <option>Standard Admin</option>
+          <option>Editor</option>
+        </select>
       </div>
-      <button type="submit" class="btn-primary">Add Courses</button>
-  
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="Enter email" id="txtadminemail">
+      </div>
+      <div class="form-group">
+        <label>Assign Password</label>
+        <input type="password" placeholder="Set temporary password" id="txtadminpass">
+      </div>
+      <button class="btn-primary btngreen" id="btnaddadmin">Create Admin Account</button>
+  </div>
+
+  <!-- Table -->
+  <div class="card">
+    <h2>System Administrators</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Staff ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tablebody">
+          <tr>
+            <td>ADM-101</td>
+            <td>Alice Wekesa</td>
+            <td>a.wekesa@kibabii.ac.ke</td>
+            <td>Super Admin</td>
+            <td>
+              <button class="btn btnred">Revoke Access</button>
+              <button class="btn btnblue">Reset Password</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </main>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>© 2026 eClass Attendance</p>
+  <p>© 2026 Elimu Admin Panel</p>
 </footer>
+
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
 <script src="js/config.js"></script>
+<script src="js/admins.js"></script>
 
 <script>
   const menuToggle = document.querySelector('.menu-toggle');
@@ -99,14 +122,15 @@
     nav.classList.toggle('active');
     menuToggle.textContent = nav.classList.contains('active') ? "✖" : "☰";
   });
-  let lblusername = document.getElementById('lblusername');
-auth.onAuthStateChanged((user)){
-  if(user){
-    lblusername.innerHTML = user.email;
-  }else{
-    window.location.href = "index.html";
-  }
-}
+
+  let lbusername = document.getElementById('lbusername');
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      lbusername.innerHTML = user.email;
+    } else {
+      window.location.href = "index.html";
+    }
+  });
 </script>
 
 </body>
