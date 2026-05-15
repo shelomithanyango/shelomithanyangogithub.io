@@ -8,35 +8,33 @@ let btnAdd = document.getElementById("btnaddcourse");
     let venueCode = document.getElementById("txtvenuecode").value.trim();
     let longitude = document.getElementById("txtlongitude").value.trim();
     let latitude = document.getElementById("txtlatitude").value.trim();
-    // select status for html dropdown 
-    let status = document.querySelector("select").value;
-    // get create by 
-      let user = firebase.auth().currentUser;
+     let status = document.querySelector("select").value;
+     let user = firebase.auth().currentUser;
       let createdby = user.email;
       let timenow = Date.now(); 
 
-    // validation
+   
     if (venueName == "") {
       alert("Enter venue name");
       return;
     }
-    // check if venue code is empty the return code stops here
+    
     if (venueCode == "") {
       alert("Enter venue code");
       return;
     }
-    // check if longitude is empty the return code stops here
+   
     if (longitude == "") {
       alert("Enter longitude");
       return;
     }
-    // check if latitude is empty the return code stops here
+    
     if (latitude == "") {
       alert("Enter latitude");
       return;
     }
 
-    // firebase insert
+   
     firebase.database().ref("GpsVenus/" + venueCode).set({
       VenueName: venueName,
       VenueCode: venueCode,
@@ -50,7 +48,7 @@ let btnAdd = document.getElementById("btnaddcourse");
     .then(() => {
       alert("GPS added successfully");
 
-      // clear inputs
+      
       document.getElementById("txtvenuename").value = "";
       document.getElementById("txtvenuecode").value = "";
       document.getElementById("txtlongitude").value = "";
@@ -66,17 +64,16 @@ let btnAdd = document.getElementById("btnaddcourse");
   });
 
 function loaddata(){
-  // Load venue to the table
-   // table body
+  
   let tableBody = document.getElementById("tablebody");
-  // load data
+ 
   firebase.database().ref("GpsVenus").on("value", (snapshot) => {
-    // clear table first
+   
     tableBody.innerHTML = "";
     snapshot.forEach((childSnapshot) => {
       let data = childSnapshot.val();
-      let key = childSnapshot.key; // venueCode key help in modification
-      // only active venues
+      let key = childSnapshot.key; 
+     
       if(data.Status == "active"){
         tableBody.innerHTML += `
           <tr>
@@ -107,8 +104,7 @@ function loaddata(){
 
 loaddata();
 
-
- // function to close venue (set inactive)
+)
   function closeVenue(venueCode) {
 
     let confirmClose = confirm("Are you sure you want to close this GPS venue?");
@@ -128,7 +124,7 @@ loaddata();
   }
 
 
-  // function to prepare edit 
+  
 
 
 function editVenue(venueCode){
@@ -137,7 +133,7 @@ function editVenue(venueCode){
 
       let data = snapshot.val();
 
-      // fill form
+    
       document.getElementById("txtvenuename").value = data.VenueName;
       document.getElementById("txtvenuecode").value = data.VenueCode;
       document.getElementById("txtlongitude").value = data.Longitude;
@@ -145,14 +141,14 @@ function editVenue(venueCode){
 
       document.querySelector("select").value = data.Status;
 
-      // lock venue code
+     
       document.getElementById("txtvenuecode").disabled = true;
 
-      // enable edit mode
+     
       editMode = true;
       editKey = venueCode;
 
-      // change button text
+      
       document.getElementById("btnaddcourse").innerText = "Update GPS";
 
     });

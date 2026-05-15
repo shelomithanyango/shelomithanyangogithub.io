@@ -1,0 +1,93 @@
+let lecturerselect = document.getElementById('lecturerselect')
+firebase.database().ref("userDetails").once("value",function(snapshot) {
+    lecturerselect.innerHTML = "<option>Select Lecturer </option >"
+    snapshot.forEach(function(childSnapshot){   
+        let data = childSnapshot.val()
+        if(data.role == "admin" && data.status == "active"){
+    let option=document.createElement("option")
+    option.value=data.Email
+    option.textContent=data.FirstName 
+    lecturerselect.appendChild(option)
+        }
+})
+})
+
+
+let venueselect = document.getElementById('venueselect');
+firebase.database().ref("GpsVenus").once("value",function(snapshot) {
+    venueselect.innerHTML = "<option value=''>select venue</option>";
+    snapshot.forEach(function(childSnapshot) {
+        let data = childSnapshot.val()
+        if(data.Status == "active"){
+            let option = document.createElement("option")
+            option.value = data.VenueCode
+            option.textContent = data.VenueName
+            venueselect.appendChild(option)
+        }
+
+    })
+})
+
+//ADD NEW COURSE
+let btnaddcourse = document.getElementById("btnaddcourse");
+btnaddcourse.addEventListener("click", function() {
+
+    // inputs
+    let txtcoursename = document.getElementById("txtcoursename").value.trim();
+    let txtcoursecode = document.getElementById("txtcoursecode").value.trim();
+    let lecturerselect = document.getElementById("lecturerselect").value;
+    let venueselect = document.getElementById("venueselect").value;
+    let statusselect = document.getElementById("statusselect").value.trim();
+    // select status for html dropdown 
+    let status = document.querySelector("select").value;
+    // get create by 
+      let user = firebase.auth().currentUser;
+      let createdby = user.email;
+      let timenow = Date.now(); 
+
+    // validation
+    if (txtcoursename == "") {
+      alert("Enter course name");
+      return;
+    }
+    // check if course code is empty the return code stops here
+    if (txtcoursecode == "") {
+      alert("Enter course code");
+      return;
+    }
+    // check if lecturer is empty the return code stops here
+    if (lecturerselect == "") {
+      alert("Select lecturer");
+      return;
+    }
+    // check if venue is empty the return code stops here
+    if (venueselect == "") {
+      alert("Select venue");
+      return;
+    }
+
+    // firebase insert
+    firebase.database().ref("courses/" + txtcoursecode).set({
+      CourseName: txtcoursename,
+      CourseCode: txtcoursecode,
+      Status: status,
+      Lecturer: lecturerselect,
+      Venue: venueselect,
+      CreatedAt: timenow,
+      CreatedBy: createdby
+    })
+
+    .then(() => {
+      alert("Course added successfully");
+
+      // clear inputs
+     
+     
+      document.getElementById("txtcoursecode").disabled = false;
+      document.getElementById("btnaddcourse").innerText = "Add new Course";
+    })
+
+    .catch((error) => {
+      alert(error.message);
+    });
+  });

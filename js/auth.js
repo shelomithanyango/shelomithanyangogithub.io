@@ -22,9 +22,10 @@ btnlogin.addEventListener("click", () =>{
 				if(role == "admin"){
 					// admin
 				window.location.href = "dashboard.html"
-				}else if(role == "Student"){
+				}else if(role == "student"){
 					// studnet
 				alert("Student logged in ")
+				window.location.href = "dashboard.html"
 				}else{
 					// active users with no roles
 				alert("No role added connnect with admin")

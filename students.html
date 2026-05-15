@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Students</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/form.css">
 </head>
 <body>
 
@@ -43,43 +44,84 @@
     <div class="card"><h3>Pending approvals</h3><p class="stat-number">7</p></div>
   </div>
 
-  <!-- Table -->
-  <div class="card">
-    <h2>Pending Approval</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Name</th><th>Program</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>2026001</td><td>Mka Wanyenje</td><td>IT</td><td>Active</td></tr>
-          <tr><td>2026002</td><td>Oscar Omusungu</td><td>CS</td><td>Active</td></tr>
-          <tr><td>2026003</td><td>Masta Okwako</td><td>SE</td><td>Suspended</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
   <!-- Form -->
   <div class="card">
     <h2>Add New Student</h2>
     
       <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" placeholder="Enter full name">
+        <label>First Name</label>
+        <input type="text" placeholder="Enter full name" id="txtfname">
       </div>
       <div class="form-group">
-        <label>Program</label>
-        <input type="text" placeholder="Enter program">
+        <label>Last Name</label>
+        <input type="text" placeholder="Enter program" id="txtlname">
+      </div>
+       <div class="form-group">
+        <label>Email</label>
+        <input type="text" placeholder="Enter program" id="txtemail">
       </div>
       <div class="form-group">
         <label>Status</label>
-        <select><option>Active</option><option>Suspended</option></select>
+        <select id="slstatus"><option>Active</option><option>Suspended</option></select>
       </div>
-      <button type="submit" class="btn-primary">Add Student</button>
+      <button type="submit" class="btn-primary btngreen" id="btnaddstudent">Add Student</button>
   
   </div>
 
+<!-- Table -->
+  <div class="card">
+    <h2>Active students</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tablebody">
+          <tr>
+          <td>###</td>
+          <td>###</td>
+          <td>###</td>
+          <td>
+            <button class="btn btnred"> Suspend</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    <!-- Table -->
+  <div class="card">
+    <h2>Inactive students</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tablebodyinactive">
+          <tr>
+          <td>###</td>
+          <td>###</td>
+          <td>###</td>
+          <td>
+            <button class="btn btngreen"> Activate</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
 
 <!-- FOOTER -->
@@ -90,6 +132,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
 <script src="js/config.js"></script>
+<script src="js/student.js"></script>
 
 <script>
   const menuToggle = document.querySelector('.menu-toggle');
