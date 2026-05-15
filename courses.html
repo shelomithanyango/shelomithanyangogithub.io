@@ -38,10 +38,9 @@
 
   <!-- Cards -->
   <div class="cards-grid">
-    <div class="card"><h3>Courses</h3><p class="stat-number">350</p></div>
-    <div class="card"><h3>Active</h3><p class="stat-number">25</p></div>
-    <div class="card"><h3>Past</h3><p class="stat-number">18</p></div>
-    <div class="card"><h3>In Session</h3><p class="stat-number">7</p></div>
+    <div class="card"><h3>Active Courses</h3><p class="stat-number" id="lblTotalActiveCourses">loading</p></div>
+    <div class="card"><h3>Inactive Courses</h3><p class="stat-number" id="lblTotalInactiveCourses">loading</p></div>
+   
   </div>
 
 
@@ -79,43 +78,78 @@
       <button type="submit" class="btn-primary" id="btnaddcourse">Add Courses</button>
   
   </div>
-    <!-- Table -->
+ <!-- Table -->
   <div class="card">
-    <h2>Active courses</h2>
-    <div class="table-wrapper">
-      <table>
-      <div class="form-group">
-        <label >Course status</label>
-        <select id="statusselect"><option>active</option><option value="">inactive
-
-        </option></select>
-      </div>
-     
-      <button type="submit" class="btn-primary" id="btnaddcourse">Add Courses</button>
-  
-  </div>
-    <!-- Table -->
-  <div class="card">
-    <h2>Active courses</h2>
+    <h2 >Active courses</h2>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>Course Id</th><th>Course Name</th><th>Venue</th><th>Action</th></tr>
+          <tr>
+            <th>CourseCode</th>
+            <th>Lecturername</th>
+            <th>Venue</th>
+            <th>Lecturername</th>
+            <th>Action</th>
+          </tr>
         </thead>
-        <tbody>
-          <tr><td>2026001</td><td>Mka Wanyenje</td><td>IT</td><td><button class="btn btngreen">Open Session</button><button class="btn btnred">Close course</button><button class="btn btnblue">View Attendance</button></td></tr>
-      
-        </tbody>
+        <tbody id="tablebody">
+          <tr>
+            <td>###</td>
+            <td>###</td>
+            <td>###</td>
+            <td>###</td>
+            <td>
+              <button class="btn btnred">
+                Suspend course
+              </button>
+          </td>
+        </tr>
+          
+        </tbody id="tablebody">
       </table>
     </div>
   </div>
 
+
+   <!-- Table -->
+  <div class="card">
+    <h2 >Inactive courses</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>CourseCode</th>
+            <th>Lecturername</th>
+            <th>Venue</th>
+            <th>Lecturername</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tablebodyinactive">
+          <tr>
+            <td>###</td>
+            <td>###</td>
+            <td>###</td>
+            <td>###</td>
+            <td>
+              <button class="btn btngreen">
+                Activate course
+              </button>
+          </td>
+        </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
 
 <!-- FOOTER -->
 <footer class="footer">
   <p>© 2026 eClass Attendance</p>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>

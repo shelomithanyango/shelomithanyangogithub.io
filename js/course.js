@@ -91,3 +91,108 @@ btnaddcourse.addEventListener("click", function() {
       alert(error.message);
     });
   });
+
+
+let lblTotalActiveCourses = document.getElementById("lblTotalActiveCourses")
+firebase.database().ref("courses").once("value", function(snapshot) {
+    let total=0
+    snapshot.forEach(function(childSnapshot) {
+        let data=childSnapshot.val()
+        if (data.Status == "active"){
+            total++
+        }
+    })
+
+    lblTotalActiveCourses.innerHTML = total
+})
+
+let lblTotalInactiveCourses = document.getElementById("lblTotalInactiveCourses")
+firebase.database().ref("courses").once("value", function(snapshot) {
+    let total=0
+    snapshot.forEach(function(childSnapshot) {
+        let data=childSnapshot.val()
+        if (data.Status == "inactive"){
+            total++
+        }
+    })
+
+    lblTotalInactiveCourses.innerHTML = total
+})
+
+
+function loaddata(){
+  // Load venue to the table
+   // table body
+  let tableBody = document.getElementById("tablebody");
+  // load data
+  firebase.database().ref("courses").on("value", (snapshot) => {
+    // clear table first
+    tableBody.innerHTML = "";
+    snapshot.forEach((childSnapshot) => {
+      let data = childSnapshot.val();
+      let key = childSnapshot.key; // venueCode key help in modification
+      // only active venues
+      if(data.Status == "active"){
+        tableBody.innerHTML += `
+          <tr>
+            <td>${data.CourseCode}</td>
+            <td>${data.CourseName}</td>
+            <td>${data.Lecturername}</td>
+            <td>${data.Venue}</td>
+
+            <td>
+              <button class="btn btnred" onclick="suspendcourse('${key}')">
+                Suspend course
+              </button>
+            </td>
+
+          </tr>
+
+        `;
+      }
+
+    });
+
+  });
+}
+
+loaddata();
+
+
+ function loaddatainactive(){
+  // Load venue to the table
+   // table body
+  let tableBody = document.getElementById("tablebodyinactive");
+  // load data
+  firebase.database().ref("courses").on("value", (snapshot) => {
+    // clear table first
+    tableBody.innerHTML = "";
+    snapshot.forEach((childSnapshot) => {
+      let data = childSnapshot.val();
+      let key = childSnapshot.key; // venueCode key help in modification
+      // only active venues
+      if(data.Status == "inactive"){
+        tableBody.innerHTML += `
+          <tr>
+            <td>${data.CourseCode}</td>
+            <td>${data.CourseName}</td>
+            <td>${data.Lecturername}</td>
+            <td>${data.Venue}</td>
+
+            <td>
+              <button class="btn btngreen" onclick="activatecourse('${key}')">
+                Activate course
+              </button>
+            </td>
+
+          </tr>
+
+        `;
+      }
+
+    });
+
+  });
+}
+
+loaddatainactive()

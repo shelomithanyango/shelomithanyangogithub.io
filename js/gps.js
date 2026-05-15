@@ -65,17 +65,19 @@ let btnAdd = document.getElementById("btnaddcourse");
 
 function loaddata(){
   
-  let tableBody = document.getElementById("tablebody");
- 
+  let  activetable= document.getElementById("activetable");
+  
+                                                                                                              
   firebase.database().ref("GpsVenus").on("value", (snapshot) => {
    
-    tableBody.innerHTML = "";
+    activetable.innerHTML = "";                                                                              inactivetable
     snapshot.forEach((childSnapshot) => {
       let data = childSnapshot.val();
       let key = childSnapshot.key; 
+      console.log(data.Status)
      
       if(data.Status == "active"){
-        tableBody.innerHTML += `
+        activetable.innerHTML += `
           <tr>
             <td>${data.VenueCode}</td>
             <td>${data.VenueName}</td>
@@ -104,7 +106,50 @@ function loaddata(){
 
 loaddata();
 
-)
+
+function loadInactiveData(){
+  
+  let inactivetable = document.getElementById("inactivetable");
+ 
+  firebase.database().ref("GpsVenus").on("value", (snapshot) => {
+   
+    inactivetable.innerHTML = "";
+    snapshot.forEach((childSnapshot) => {
+      let data = childSnapshot.val();
+      let key = childSnapshot.key; 
+     
+      if(data.Status == "inactive"){
+        inactivetable.innerHTML += `
+          <tr>
+            <td>${data.VenueCode}</td>
+            <td>${data.VenueName}</td>
+            <td>${data.Latitude}</td>
+            <td>${data.Longitude}</td>
+
+            <td>
+              <button class="btn btnred" onclick="closeVenue('${key}')">
+                Close GPS Venue
+              </button>
+
+              <button class="btn btnblue" onclick="editVenue('${key}')">
+                Edit GPS
+              </button>
+            </td>
+
+          </tr>
+
+        `;
+      }
+
+    });
+
+  });
+}
+
+loadInactiveData();
+
+
+
   function closeVenue(venueCode) {
 
     let confirmClose = confirm("Are you sure you want to close this GPS venue?");
@@ -154,3 +199,33 @@ function editVenue(venueCode){
     });
 
 }
+
+
+
+let lblTotalActive = document.getElementById("lblTotalActive")
+
+firebase.database().ref("GpsVenus").once("value", function(snapshot) {
+    let total=0
+    snapshot.forEach(function(childSnapshot) {
+        let data=childSnapshot.val()
+        if (data.Status == "active"){
+            total++
+        }
+    })
+
+    lblTotalActive.innerHTML = total
+})
+
+let lblTotalInactive = document.getElementById("lblTotalInactive")
+
+firebase.database().ref("GpsVenus").once("value", function(snapshot) {
+    let total=0
+    snapshot.forEach(function(childSnapshot) {
+        let data=childSnapshot.val()
+        if (data.Status == "inactive"){
+            total++
+        }
+    })
+
+    lblTotalInactive.innerHTML = total
+})

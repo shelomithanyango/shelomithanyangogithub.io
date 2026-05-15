@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attendance Reports</title>
+  <title>Reports</title>
   <link rel="stylesheet" href="css/dashboard.css">
-  <link rel="stylesheet" type="text/css" href="css/form.css">
+  <link rel="stylesheet" href="css/reports.css">
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="logo">
     <img src="assets/kibabii.jpeg" alt="logo" width="20%">
@@ -18,6 +19,7 @@
   </div>
 </div>
 
+<!-- NAVIGATION -->
 <header class="header">
   <button class="menu-toggle">☰</button>
   <nav class="nav">
@@ -31,85 +33,52 @@
   </nav>
 </header>
 
+<!-- MAIN -->
 <main class="container">
 
+  <!-- Cards -->
   <div class="cards-grid">
-    <div class="card"><h3>Present Today</h3><p class="stat-number">1,240</p></div>
-    <div class="card"><h3>Absent</h3><p class="stat-number">45</p></div>
-  </div>
-
-  <div class="card">
-    <h2>Generate Attendance Report</h2>
-      <div class="form-group">
-        <label>Course/Unit Name</label>
-        <input type="text" placeholder="e.g. BIT 111" id="txtunitname">
-      </div>
-      <div class="form-group">
-        <label>Registration Number</label>
-        <input type="text" placeholder="e.g. COM/001/22" id="txtregno">
-      </div>
-      <div class="form-group">
-        <label>Session Type</label>
-        <select id="selectsession">
-          <option>Lecture</option>
-          <option>Lab</option>
-          <option>Exam</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Start Date</label>
-        <input type="date" id="txtstartdate">
-      </div>
-      <div class="form-group">
-        <label>End Date</label>
-        <input type="date" id="txtenddate">
-      </div>
-      <button class="btn-primary btngreen" id="btnfilter">Generate Report</button>
-  </div>
-
-  <div class="card">
-    <h2>Attendance Logs</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Reg No</th>
-            <th>Student Name</th>
-            <th>Unit Code</th>
-            <th>Time In</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="tablebody">
-          <tr>
-            <td>BIT/0063/23</td>
-            <td>Shelomith Anyango</td>
-            <td>BIT 4110</td>
-            <td>08:15 AM</td>
-            <td><span style="color: green; font-weight: bold;">Verified</span></td>
-            <td>
-              <button class="btn btnblue">View Details</button>
-              <button class="btn btnred">Flag Entry</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="card">
+      <h3>Total Users Chart</h3> 
+      <canvas id="mybargraph"></canvas>
     </div>
-  </div>
+    
+    <div class="card">
+      <h3>Total Courses</h3> 
+      <canvas id="mypiecourses"></canvas>
+    </div>
+     
+    <div class="card">
+      <h3>Lecturers</h3> 
+      <canvas id="mylineadmins"></canvas>
+    </div>
+     
+    <div class="card">
+      <h3>Pending approvals</h3> 
+      <canvas id="myradaradmins"></canvas>
+    </div>
+
+    </div>
+   
+  
 
 </main>
+<!-- Print Button -->
+<div style="text-align: right; margin-bottom: 12px;">
+  <button class="btn-primary" onclick="window.print()">🖨️ Print Dashboard</button>
+</div>
 
-<footer class="footer">
-  <p>© 2026 Kibabii Admin Panel</p>
+  <footer class="footer">
+  <p>© 2026 Elimu Admin Panel</p>
 </footer>
+ 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
 <script src="js/config.js"></script>
 <script src="js/reports.js"></script>
-
 <script>
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
@@ -118,14 +87,14 @@
     menuToggle.textContent = nav.classList.contains('active') ? "✖" : "☰";
   });
 
-  let lbusername = document.getElementById('lbusername');
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      lbusername.innerHTML = user.email;
-    } else {
-      window.location.href = "index.html";
-    }
-  });
+let lbusername = document.getElementById('lbusername')
+auth.onAuthStateChanged( function (user) {
+  if (user) {
+    lbusername.innerHTML= user.email
+  }else{
+    window.location.href ="index.html"
+  }
+})
 </script>
 
 </body>

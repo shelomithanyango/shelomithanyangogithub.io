@@ -126,3 +126,33 @@ function activatestudent(studentid){
     })
     
 }
+
+
+let lblTotalActiveStudents = document.getElementById("lblTotalActiveStudents")
+
+firebase.database().ref("userDetails").once("value", function(snapshot) {
+    let total=0
+    snapshot.forEach(function(childSnapshot) {
+        let data=childSnapshot.val()
+        if (data.status == "active" && data.role == "student"){
+            total++
+        }
+    })
+
+    lblTotalActiveStudents.innerHTML = total
+})
+
+
+let lblTotalInactiveStudents = document.getElementById("lblTotalInactiveStudents")
+
+firebase.database().ref("userDetails").once("value", function(snapshot) {
+    let total=0
+    snapshot.forEach(function(childSnapshot) {
+        let data=childSnapshot.val()
+        if (data.status == "inactive" && data.role == "student"){
+            total++
+        }
+    })
+
+    lblTotalInactiveStudents.innerHTML = total
+})

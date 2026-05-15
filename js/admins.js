@@ -1,84 +1,180 @@
-// Ensure Firebase is initialized before running
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Admins script loaded...");
+let btnaddadmin = document.getElementById('btnaddadmin')
 
-    // Check if Firebase was initialized in config.js
-    if (typeof firebase === 'undefined') {
-        console.error("Firebase is not defined. Check your config.js and script tags.");
-        return;
-    }
+btnaddadmin.addEventListener('click', () =>{
+ let txtadminfname = document.getElementById("txtadminfname").value
+ let txtadminlname = document.getElementById("txtadminlname").value
+ let txtadminemail = document.getElementById("txtadminemail").value
 
-    const auth = firebase.auth();
-    const database = firebase.database();
 
-    // Elements
-    const btnCreate = document.getElementById('btnaddadmin');
-    const tableBody = document.getElementById('tablebody');
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.nav');
+  if(txtadminfname == "" || txtadminemail == ""){
+  	alert("Name and email be filled")
+  }else{
+  	
+  		let emailid = txtadminemail.replace(/\./g, "_dot_").replace(/@/g, "_at_")
+  		let status = document.querySelector("select").value;
+  		let timenow = Date.now(); 
+  		let role = "admin"
+        let autopassword = "12345678"
+        let user = firebase.auth().currentUser;
+        let createdby = user.email
+  		firebase.auth().createUserWithEmailAndPassword(txtemail,autopassword)
+  		.then((userCredential) =>{
+  			firebase.database().ref('userDetails/' + emailid).set({
+  				FirstName:txtfname,
+  				LastName:txtlname,
+  				Email: txtemail,
+  				Status: status,
+  				CreatedBy: createdby,
+  				Role: role,
+  				CreatedOn: timenow
+  			})
+  			alert("New admin added password is 12345678 and username is email ")
+  		})
+  		.catch((error) => {
+  			console.log(error)
+  			alert(error.message)
+  		})
+  	
+  }
 
-    // --- Mobile Menu ---
-    if(menuToggle) {
-        menuToggle.onclick = () => nav.classList.toggle('active');
-    }
+}) 
 
-    // --- Auth State ---
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            document.getElementById('lbusername').innerText = user.email;
-            fetchAdmins(database);
-        } else {
-            console.warn("No user logged in. Redirecting...");
-            // window.location.href = 'login.html'; // Uncomment this once login is ready
-        }
-    });
 
-    // --- Form Submission ---
-    btnCreate.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent page refresh
-        
-        const fname = document.getElementById('txtadminfname').value;
-        const lname = document.getElementById('txtadminlname').value;
-        const email = document.getElementById('txtadminemail').value;
-        const role = document.getElementById('selectrole').value;
+function loaddata(){
+    let tablebody = document.getElementById('tablebody')
 
-        if (!fname || !email) {
-            alert("Fill in at least name and email.");
-            return;
-        }
+    firebase.database().ref("userDetails").on("value",(snapshot) =>{
+        tablebody.innerHTML = "" 
 
-        console.log("Attempting to save:", fname);
+        snapshot.forEach((childSnapshot) =>{
+            let data = childSnapshot.val()
+            let key = childSnapshot.key
 
-        database.ref('admins').push({
-            FirstName: fname,
-            LastName: lname,
-            Email: email,
-            role: role
+            if(data.status == "active" && data.role == "admin"){
+                tablebody.innerHTML += `
+                    <tr>
+                     <td>${data.Email}</td>
+                     <td>${data.FirstName}</td>
+                     <td>${data.LastName}</td>
+                     <td>
+                      <button class="btn btnred" onclick="suspendadmin('${key}')" > Suspend</button>
+                      </td>
+                    </tr>
+                `
+            }
         })
-        .then(() => {
-            alert("Admin added!");
-            document.getElementById('txtadminfname').value = ""; // Clear field
-        })
-        .catch(err => {
-            console.error("Firebase Write Error:", err);
-            alert("Permission Denied! Check your Database Rules.");
-        });
-    });
-});
 
-function fetchAdmins(db) {
-    db.ref('admins').on('value', (snapshot) => {
-        const tableBody = document.getElementById('tablebody');
-        tableBody.innerHTML = "";
-        snapshot.forEach(child => {
-            const data = child.val();
-            tableBody.innerHTML += `
-                <tr>
-                    <td>${data.FirstName}</td>
-                    <td>${data.LastName}</td>
-                    <td>${data.Email}</td>
-                    <td><button class="btn btnred">Revoke</button></td>
-                </tr>`;
-        });
-    });
+    })
 }
+
+loaddata();
+
+
+function suspendadmin(adminid){
+    let confirmSuspend = confirm("Are you sure you want to suspend this admin ?")
+    if(!confirmSuspend) return;
+    firebase.database().ref("userDetails/" + adminid).update({
+        status:"inactive"
+    })
+    .then(() =>{
+        alert("Admin suspended")
+    })
+    .then((error) =>{
+        alert("Error while suspending")
+    })
+
+}
+
+
+
+
+// activation  254740409701
+
+
+function loaddatainactive(){
+    let tablebody = document.getElementById('tablebodyinactive')
+
+    firebase.database().ref("userDetails").on("value",(snapshot) =>{
+        tablebody.innerHTML = "" 
+
+        snapshot.forEach((childSnapshot) =>{
+            let data = childSnapshot.val()
+            let key = childSnapshot.key
+
+            if(data.status == "inactive" && data.role == "admin"){
+                tablebody.innerHTML += `
+                    <tr>
+                     <td>${data.Email}</td>
+                     <td>${data.FirstName}</td>
+                     <td>${data.LastName}</td>
+                     <td>
+                      <button class="btn btngreen" onclick="activateadmin('${key}')" > Activate</button>
+                      </td>
+                    </tr>
+                `
+            }
+        })
+
+    })
+}
+
+loaddatainactive();
+
+
+function activateadmin(adminid){
+    let confirmSuspend = confirm("Are you sure you want to activate this admin ?")
+    if(!confirmSuspend) return;
+    firebase.database().ref("userDetails/" + adminid).update({
+        status:"active"
+    })
+    .then(() =>{
+        alert("Admin activated")
+    })
+    .then((error) =>{
+        alert("Error while activating")
+    })
+
+}
+
+
+// count admin
+
+
+let lblTotalAdmins = document.getElementById('lblTotalAdmins')
+firebase.database().ref("userDetails").once("value", function(snapshot) {
+  let total = 0
+  snapshot.forEach(function(childSnapshot){
+    let data = childSnapshot.val()
+    if (data.role == "admin" ){
+      total++
+    }
+
+  })
+  lblTotalAdmins.innerHTML = total
+})
+
+// active admin 
+let lbTotalActiveAdmins = document.getElementById('lbTotalActiveAdmins')
+firebase.database().ref("userDetails").once("value", function(snapshot) {
+  let total = 0
+  snapshot.forEach(function(childSnapshot){
+    let data = childSnapshot.val()
+    if (data.status == "active" && data.role == "admin"){
+      total++
+    }
+    })
+  lblTotalActiveAdmins.innerHTML = total
+})
+
+// inactive 
+let lbTotalInactiveAdmins = document.getElementById('lbTotalInactiveAdmins')
+firebase.database().ref("userDetails").once("value", function(snapshot) {
+  let total = 0
+  snapshot.forEach(function(childSnapshot){
+    let data = childSnapshot.val()
+    if (data.status == "inactive" && data.role == "admin"){
+      total++
+    }
+    })
+  lblTotalInactiveAdmins.innerHTML = total
+})

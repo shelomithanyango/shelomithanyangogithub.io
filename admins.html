@@ -38,8 +38,10 @@
 
   <!-- Cards -->
   <div class="cards-grid">
-    <div class="card"><h3>Super Admins</h3><p class="stat-number">3</p></div>
-    <div class="card"><h3>Standard Admins</h3><p class="stat-number">12</p></div>
+    <div class="card"><h3>Total Admins</h3><p class="stat-number" id="lblTotalAdmins">loading...</p></div>
+    <div class="card"><h3> Active</h3><p class="stat-number" id="lblTotalActiveAdmins">loading...</p></div>
+    <div class="card"><h3>Inactive</h3><p class="stat-number" id="lblTotalInactiveAdmins">loading...</p></div>
+    
   </div>
 
   <!-- Form -->
@@ -60,9 +62,16 @@
       <div class="form-group">
         <label>Access Level</label>
         <select id="selectrole">
-          <option>Super Admin</option>
+          <option> Admin</option>
           <option>Standard Admin</option>
           <option>Editor</option>
+        </select>
+      </div>
+       <div class="form-group">
+        <label>Status</label>
+        <select id="selectstatus">
+          <option>active</option>
+          <option>inactive</option>
         </select>
       </div>
     
@@ -73,30 +82,55 @@
       <button class="btn-primary btngreen" id="btnaddadmin">Create Admin Account</button>
   </div>
 
-  <!-- Table -->
+   <!-- Table -->
   <div class="card">
-    <h2>System Administrators</h2>
+    <h2>Active admins</h2>
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
             <th>Email</th>
-           <th>Action</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody id="tablebody">
           <tr>
-            <td>ADM-101</td>
-            <td>Alice Wekesa</td>
-            <td>a.wekesa@kibabii.ac.ke</td>
-            
-            <td>
-              <button class="btn btnred">Revoke Access</button>
-              <button class="btn btnblue">Reset Password</button>
-            </td>
+          <td>###</td>
+          <td>###</td>
+          <td>###</td>
+          <td>
+            <button class="btn btnred"> Suspend</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    <!-- Table -->
+  <div class="card">
+    <h2>Inactive admins</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Action</th>
           </tr>
+        </thead>
+        <tbody id="tablebodyinactive">
+          <tr>
+          <td>###</td>
+          <td>###</td>
+          <td>###</td>
+          <td>
+            <button class="btn btngreen"> Activate</button>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
